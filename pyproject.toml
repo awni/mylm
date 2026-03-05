@@ -1,0 +1,13 @@
+[project]
+name = "mylm"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = [
+    "mlx-lm",
+]
+
+[tool.setuptools.packages.find]
+include = ["mylm*"]
+
+[project.scripts]
+mylm = "mylm.chat:main"

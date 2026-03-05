@@ -1,0 +1,4 @@
+DEFAULT_MODEL = "mlx-community/Qwen3.5-4B-6bit"
+DEFAULT_TEMP = 1.0
+DEFAULT_TOP_P = 0.95
+DEFAULT_TOP_K = 20

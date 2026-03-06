@@ -20,7 +20,7 @@ DEFAULT_MAX_TOKENS = 8192
 SYSTEM_FILE = Path(__file__).parent / "SYSTEM.md"
 MEMORY_PATH = Path.home() / ".cache" / "mylm" / "memory"
 LORA_LAYERS = 16
-LORA_CONFIG = {"rank": 8, "scale": 16.0, "dropout": 0.0}
+LORA_CONFIG = {"rank": 16, "scale": 16.0, "dropout": 0.0}
 
 
 def setup_arg_parser():

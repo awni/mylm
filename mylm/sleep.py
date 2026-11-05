@@ -105,6 +105,10 @@ def sleep(
             f.write(json.dumps(item) + "\n")
     logger.info(f"Saved {len(data)} total Q&A pairs to {qa_file}")
 
+    if not data:
+        logger.warning("No Q&A pairs available to train on; skipping adapter training.")
+        return
+
     # Prepend system prompt to each example for training
     if system_prompt:
         for item in data:
@@ -117,6 +121,10 @@ def sleep(
     model.freeze()
     lora_config = {"rank": 16, "scale": 16.0, "dropout": 0.0}
     linear_to_lora_layers(model, num_layers=16, config=lora_config)
+    adapter_file = f"{memory_path}/adapters.safetensors"
+    if os.path.exists(adapter_file):
+        model.load_weights(adapter_file, strict=False)
+        logger.info(f"Loaded existing adapter weights from {adapter_file}")
 
     num_train = sum(p.size for _, p in tree_flatten(model.trainable_parameters()))
     num_total = sum(p.size for _, p in tree_flatten(model.parameters()))

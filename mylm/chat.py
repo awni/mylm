@@ -106,13 +106,14 @@ def main():
                 system_prompt=system_prompt,
             )
             history = []
-            if not has_lora:
-                linear_to_lora_layers(model, num_layers=LORA_LAYERS, config=LORA_CONFIG)
-                has_lora = True
-            model.load_weights(f"{MEMORY_PATH}/adapters.safetensors", strict=False)
+            if os.path.exists(adapter_file):
+                if not has_lora:
+                    linear_to_lora_layers(model, num_layers=LORA_LAYERS, config=LORA_CONFIG)
+                    has_lora = True
+                model.load_weights(adapter_file, strict=False)
+                logger.info("Adapter loaded. Prompt cache reset.")
             prompt_cache = make_prompt_cache(model, args.max_kv_size)
             fresh_cache = True
-            logger.info("Adapter loaded. Prompt cache reset.")
             continue
 
         if fresh_cache:

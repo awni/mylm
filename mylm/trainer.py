@@ -95,7 +95,7 @@ def default_loss(model, batch, lengths):
     logits = model(inputs)
 
     steps = mx.arange(1, targets.shape[1] + 1)
-    mask = mx.logical_and(steps >= lengths[:, 0:1], steps <= lengths[:, 1:])
+    mask = mx.logical_and(steps >= lengths[:, 0:1], steps < lengths[:, 1:])
 
     ce = nn.losses.cross_entropy(logits, targets) * mask
     ntoks = mask.sum()
